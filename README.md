@@ -17,3 +17,7 @@
 - D3
 - Leaflet
 - Plotly
+
+# Dataset 
+
+https://www.nbastuffer.com/2022-2023-nba-player-stats/
