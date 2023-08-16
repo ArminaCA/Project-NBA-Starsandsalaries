@@ -1,10 +1,10 @@
 # Contributors
 
- Oguz Kilicarslan
- Didier Ha
- Emily Penrose
- xhulio Zhapa
- Ninad Pandta
+- Oguz Kilicarsla
+- Didier Ha
+- Emily Penrose
+- Xhulio Zhapa
+- Ninad Pandta
 
 # Programs Utilized
 
