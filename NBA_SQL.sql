@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS player_data;
 
-CREATE TABLE "player_data" (
+CREATE TABLE "Salary" (
 	"rank" VARCHAR NOT NULL,
 	"full_name" VARCHAR NOT NULL,
 	"position" VARCHAR NOT NULL,
@@ -30,5 +30,42 @@ CREATE TABLE "player_data" (
     "ORTG" FLOAT NOT NULL,
     "DRTG" FLOAT NOT NULL,
     "YEAR" VARCHAR NOT NULL,
-	"FRACHISE" VARCHAR NOT NULL
+	"FRACHISE" VARCHAR NOT NULL,
+    "SALARY" INT NOT NULL,
+    PRIMARY KEY("full_name")
+	);
+
+    CREATE TABLE "Salary" (
+	"rank" VARCHAR,
+	"full_name" VARCHAR,
+	"position" VARCHAR,
+	"age" FLOAT,
+	"GP" int,
+	"MPG" FLOAT,
+	"MIN%" FLOAT,
+    "USG%" FLOAT,
+    "Tor%" FLOAT,
+    "FTA" FLOAT,
+    "FT%" FLOAT,
+    "2PA" FLOAT,
+    "2P%" FLOAT,
+    "3PA" FLOAT,
+    "3P%" FLOAT,
+    "eFG%" FLOAT,
+    "TS%" FLOAT,
+    "PPG" FLOAT,
+    "RPG" FLOAT,
+    "TRB%" FLOAT,
+    "APG" FLOAT,
+    "AST%" FLOAT,
+    "SPG" FLOAT,
+    "BPG" FLOAT,
+    "TOPG" FLOAT,
+    "VI" FLOAT,
+    "ORTG" FLOAT,
+    "DRTG" FLOAT,
+    "YEAR" VARCHAR,
+	"FRACHISE" VARCHAR,
+    "SALARY" INT,
+    PRIMARY KEY("full_name")
 	);
