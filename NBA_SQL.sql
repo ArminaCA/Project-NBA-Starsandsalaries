@@ -69,3 +69,38 @@ CREATE TABLE "Salary" (
     "SALARY" INT,
     PRIMARY KEY("full_name")
 	);
+
+    CREATE TABLE "Stats" (
+	"index" VARCHAR,
+    "rank" VARCHAR,
+	"full_name" VARCHAR,
+	"position" VARCHAR,
+	"age" FLOAT,
+	"GP" int,
+	"MPG" FLOAT,
+	"MIN%" FLOAT,
+    "USG%" FLOAT,
+    "Tor%" FLOAT,
+    "FTA" FLOAT,
+    "FT%" FLOAT,
+    "2PA" FLOAT,
+    "2P%" FLOAT,
+    "3PA" FLOAT,
+    "3P%" FLOAT,
+    "eFG%" FLOAT,
+    "TS%" FLOAT,
+    "PPG" FLOAT,
+    "RPG" FLOAT,
+    "TRB%" FLOAT,
+    "APG" FLOAT,
+    "AST%" FLOAT,
+    "SPG" FLOAT,
+    "BPG" FLOAT,
+    "TOPG" FLOAT,
+    "VI" FLOAT,
+    "ORTG" FLOAT,
+    "DRTG" FLOAT,
+    "YEAR" VARCHAR,
+	"FRACHISE" VARCHAR,
+    PRIMARY KEY("index")
+	);
