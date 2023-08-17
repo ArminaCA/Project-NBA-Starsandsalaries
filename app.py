@@ -30,11 +30,5 @@ def test():
     result = session.query(Salary.SALARY).all()
     return jsonify([row._asdict() for row in result])
 
-@app.route("/test/")
-def test2():
-    session = Session(engine)
-    result = session.query(Stats.FRANCHISE).all()
-    return jsonify([row._asdict() for row in result])
-
 if __name__ == '__main__':
     app.run(debug = True)

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NBA Charts</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>NBA Charts</h1>
+    <div>
+        <h2>Bar Chart</h2>
+        <canvas id="barChart"></canvas>
+    </div>
+    <div>
+        <h2>Line Chart</h2>
+        <canvas id="lineChart"></canvas>
+    </div>
+    <div>
+        <h2>Radial Chart</h2>
+        <canvas id="radialChart"></canvas>
+    </div>
+    <div>
+        <h2>Map Chart</h2>
+        <canvas id="mapChart"></canvas>
+    </div>
+
+    <script>
+        async function fetchChartData(endpoint) {
+            const response = await fetch(endpoint);
+            const data = await response.json();
+            return data;
+        }
+
+        async function createCharts() {
+            const barData = await fetchChartData('/bar_chart');
+            const lineData = await fetchChartData('/line_chart');
+            const radialData = await fetchChartData('/radial_chart');
+            const mapData = await fetchChartData('/map_chart');
+
+            const barChart = new Chart(document.getElementById('barChart'), {
+                type: 'bar',
+                data: {
+                    labels: barData.FULLNAME,
+                    datasets: [{
+                        label: 'PPG',
+                        data: barData.PPG,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+            });
+
+            const lineChart = new Chart(document.getElementById('lineChart'), {
+                type: 'line',
+                data: {
+                    labels: lineData.YEAR,
+                    datasets: [{
+                        label: 'PPG',
+                        data: lineData.PPG,
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+            });
+
+            // You can create similar charts for radial and map data
+        }
+
+        createCharts();
+    </script>
+</body>
+</html>
