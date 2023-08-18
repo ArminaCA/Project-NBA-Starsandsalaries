@@ -25,10 +25,20 @@ Salary = Base.classes.Salary
 app = Flask(__name__)
 
 @app.route("/")
-def test():
+@app.route("/Salary")
+def table1():
     session = Session(engine)
-    result = session.query(Salary.SALARY).all()
+    result = session.query(Salary.NAME, Salary.POSITION, Salary.SALARY)
+    session.close()
+    return jsonify([row._asdict() for row in result])
+
+@app.route("/Stats")
+def table2():
+    session = Session(engine)
+    result = session.query(Stats.RANK, Stats.NAME, Stats.POSITION, Stats.AGE, Stats.PPG, Stats.GP).all()
+    session.close()
     return jsonify([row._asdict() for row in result])
 
 if __name__ == '__main__':
     app.run(debug = True)
+    
