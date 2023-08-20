@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NBA Charts</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+</head>
+<body>
+    <h1>NBA Charts</h1>
+    <div>
+        <h2>Bar Chart</h2>
+        <div id="plot"></div>
+    </div>
+    <div>
+        <h2>Line Chart</h2>
+        <canvas id="top10SalaryChart"></canvas>
+    </div>
+    <div>
+        <h2>Radial Chart</h2>
+        <canvas id="myPieChart"></canvas>
+    </div>
+    <div>
+        <h2>Map Chart</h2>
+        <div id="map" style="width: 100%; height: 600px;"></div>
+
+    </div>
+
+   
+    
+</body>
+<script src="{{ url_for('static', filename='plots.js') }}"></script>
+</html>
