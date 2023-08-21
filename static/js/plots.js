@@ -1,5 +1,4 @@
 // Stacked Radial Bar Chart
-
 d3.json("http://127.0.0.1:5000/TeamPositionSalary").then((data) => {
   formatted_response = {};
   franchises = [];
@@ -15,7 +14,7 @@ d3.json("http://127.0.0.1:5000/TeamPositionSalary").then((data) => {
       }
     }
   } 
-  alert(formatted_response["Sacramento Kings"]["G"]);
+  //alert(formatted_response["Sacramento Kings"]["G"]);
   // Get the canvas context
   var ctx = document.getElementById('test').getContext('2d');
 
@@ -86,6 +85,7 @@ d3.json("http://127.0.0.1:5000/Stats").then((data) => {
   Plotly.newPlot("plot", data_trace, layout);
 });
 
+alert("SUCCES")
 // Top scorers by positions and ages between 2018-2023
 fetch("http://127.0.0.1:5000/PositionCounts")
   .then(response => response.json())
