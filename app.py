@@ -23,6 +23,8 @@ Base.prepare(autoload_with = engine)
 # Save reference to the table
 Stats = Base.classes.Stats
 Salary = Base.classes.Salary
+PositionCounts = Base.classes.PositionCounts
+TeamPositionSalary = Base.classes.TeamPositionSalary
 
 app = Flask(__name__)
 
@@ -85,7 +87,19 @@ def franchise_stats():
 
     return jsonify(output_data)
 
+@app.route("/PositionCounts")
+def position_counts():
+    session = Session(engine)
+    result  = session.query(PositionCounts.POSITION, PositionCounts.COUNT)
+    session.close()
+    return jsonify([row._asdict() for row in result])
 
+@app.route("/TeamPositionSalary")
+def team_position_salary():
+    session = Session(engine)
+    result  = session.query(TeamPositionSalary.FRANCHISE, TeamPositionSalary.POSITION, TeamPositionSalary.SALARY)
+    session.close()
+    return jsonify([row._asdict() for row in result])
 
 @app.route("/TopScorers")
 def top_scorers():

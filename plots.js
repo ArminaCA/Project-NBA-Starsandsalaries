@@ -1,13 +1,65 @@
+// Stacked Radial Bar Chart
+
+d3.json("http://127.0.0.1:5000/TeamPositionSalary").then((data) => {
+  formatted_response = {};
+  franchises = [];
+
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].SALARY != null) {
+      if (formatted_response.hasOwnProperty(data[i].FRANCHISE)) {
+        formatted_response[data[i].FRANCHISE][data[i].POSITION] = [data[i].SALARY]
+      } else {
+        franchises.push(data[i].FRANCHISE)
+        formatted_response[data[i].FRANCHISE] = ["G", "F", "F-C", "G-F", "C", "C-F", "F-G"];
+        formatted_response[data[i].FRANCHISE][data[i].POSITION] = [data[i].SALARY];
+      }
+    }
+  } 
+  alert(formatted_response["Sacramento Kings"]["G"]);
+  // Get the canvas context
+  var ctx = document.getElementById('test').getContext('2d');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: franchises,
+      datasets: [{
+        label: 'Salary',
+        data: formatted_response,
+        backgroundColor: backgroundColors,
+        borderColor: 'rgba(75, 192, 192, 1)', 
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        x: {
+          beginAtZero: true
+        }
+      },
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top',
+        }
+      }
+    }
+  });
+  alert("PASS2");
+});
+
 // Which positions are most scorer in NBA
 d3.json("http://127.0.0.1:5000/Stats").then((data) => {
   formatted_response = {};
   avg_ppg = [];
 
   for (let i = 0; i < data.length; i++) {
-    if (Object.prototype.hasOwnProperty(formatted_response, data[i].POSITION)) {
-      formatted_response[data[i].POSITION].push(data[i].PPG);
-    } else {
-      formatted_response[data[i].POSITION] = [data[i].PPG];
+    if (data[i].PPG != null) {
+      if (formatted_response.hasOwnProperty(data[i].POSITION)) {
+        formatted_response[data[i].POSITION].push(data[i].PPG);
+      } else {
+        formatted_response[data[i].POSITION] = [data[i].PPG];
+      }
     }
   }
 
@@ -35,13 +87,13 @@ d3.json("http://127.0.0.1:5000/Stats").then((data) => {
 });
 
 // Top scorers by positions and ages between 2018-2023
-fetch("http://127.0.0.1:5000/TopScorers")
+fetch("http://127.0.0.1:5000/PositionCounts")
   .then(response => response.json())
   .then(data => {
 
-    const labels = data.map(d => d.NAME);
-    const values = data.map(d => d.AGE);
-
+    const labels = data.map (d => d.POSITION);
+    const values = data.map (d => d.COUNT);
+  
     // Here we generate a set of random colors for each segment.
     const backgroundColors = data.map(() => `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.5)`);
 
@@ -84,7 +136,7 @@ fetch("http://127.0.0.1:5000/TopScorers")
 
   
     new Chart(ctx, {
-      type: 'line',
+      type: 'bar',
       data: {
         labels: labels,
         datasets: [{
@@ -142,7 +194,40 @@ fetch("http://127.0.0.1:5000/FranchiseStats")
         });
     });
 
+d3.json("http://127.0.0.1:5000/Stats").then((data) => {
+formatted_response = {};
+avg_ppg = [];
 
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].PPG != null) {
+      if (formatted_response.hasOwnProperty(data[i].POSITION)) {
+        formatted_response[data[i].POSITION].push(data[i].PPG);
+      } else {
+        formatted_response[data[i].POSITION] = [data[i].PPG];
+      }
+    }
+  }
 
+  Object.keys(formatted_response).forEach(function (key) {
+    let sum = 0;
+    for (let i = 0; i < formatted_response[key].length; i++) {
+      sum += formatted_response[key][i];
+    }
+    avg_ppg.push(sum / formatted_response[key].length);
+  });
 
+  let trace1 = {
+    x: Object.keys(formatted_response),
+    y: avg_ppg,
+    type: "bar",
+  };
+
+  let data_trace = [trace1];
+
+  let layout = {
+    title: "Score by Position",
+  };
+
+  Plotly.newPlot("plot", data_trace, layout);
+});
 

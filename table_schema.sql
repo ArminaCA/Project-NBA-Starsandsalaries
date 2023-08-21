@@ -1,0 +1,83 @@
+    CREATE TABLE "Salary" (
+	"INDEX" VARCHAR,
+    "RANK" VARCHAR,
+	"NAME" VARCHAR,
+    "TEAM" VARCHAR,
+	"POSITION" VARCHAR,
+	"AGE" FLOAT,
+	"GP" INT,
+	"MPG" FLOAT,
+	"MIN%" FLOAT,
+    "USG%" FLOAT,
+    "Tor%" FLOAT,
+    "FTA" FLOAT,
+    "FT%" FLOAT,
+    "2PA" FLOAT,
+    "2P%" FLOAT,
+    "3PA" FLOAT,
+    "3P%" FLOAT,
+    "eFG%" FLOAT,
+    "TS%" FLOAT,
+    "PPG" FLOAT,
+    "RPG" FLOAT,
+    "TRB%" FLOAT,
+    "APG" FLOAT,
+    "AST%" FLOAT,
+    "SPG" FLOAT,
+    "BPG" FLOAT,
+    "TOPG" FLOAT,
+    "VI" FLOAT,
+    "ORTG" FLOAT,
+    "DRTG" FLOAT,
+    "SALARY" INT,
+    PRIMARY KEY("NAME")
+	);
+
+    CREATE TABLE "Stats" (
+	"INDEX" VARCHAR,
+    "RANK" VARCHAR,
+	"NAME" VARCHAR,
+	"POSITION" VARCHAR,
+	"AGE" FLOAT,
+	"GP" int,
+	"MPG" FLOAT,
+	"MIN%" FLOAT,
+    "USG%" FLOAT,
+    "Tor%" FLOAT,
+    "FTA" FLOAT,
+    "FT%" FLOAT,
+    "2PA" FLOAT,
+    "2P%" FLOAT,
+    "3PA" FLOAT,
+    "3P%" FLOAT,
+    "eFG%" FLOAT,
+    "TS%" FLOAT,
+    "PPG" FLOAT,
+    "RPG" FLOAT,
+    "TRB%" FLOAT,
+    "APG" FLOAT,
+    "AST%" FLOAT,
+    "SPG" FLOAT,
+    "BPG" FLOAT,
+    "TOPG" FLOAT,
+    "VI" FLOAT,
+    "ORTG" FLOAT,
+    "DRTG" FLOAT,
+    "YEAR" VARCHAR,
+	"FRANCHISE" VARCHAR,
+    PRIMARY KEY("INDEX")
+	);
+
+CREATE TABLE "PositionCounts" (
+    "POSITION" VARCHAR,
+    "COUNT" INT,
+    PRIMARY KEY("POSITION")
+	);
+
+CREATE TABLE "TeamPositionSalary" (
+    "FRANCHISE" VARCHAR,
+    "POSITION" VARCHAR,
+    "INDEX" VARCHAR,
+    "SALARY" INT,
+    PRIMARY KEY("INDEX")
+	);
