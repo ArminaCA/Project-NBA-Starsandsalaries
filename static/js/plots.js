@@ -85,7 +85,7 @@ d3.json("http://127.0.0.1:5000/Stats").then((data) => {
   Plotly.newPlot("plot", data_trace, layout);
 });
 
-alert("SUCCES")
+
 // Top scorers by positions and ages between 2018-2023
 fetch("http://127.0.0.1:5000/PositionCounts")
   .then(response => response.json())
@@ -118,6 +118,7 @@ fetch("http://127.0.0.1:5000/PositionCounts")
         }
       }
     });
+  alert("HEYOO")
   });
 
   // Top10 highest paid players by their position
