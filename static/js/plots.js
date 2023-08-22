@@ -174,7 +174,7 @@ fetch("http://127.0.0.1:5000/PositionCounts")
 
     // Get the canvas context
     var ctx = document.getElementById('myPieChart').getContext('2d');
-
+    
     var myPieChart = new Chart(ctx, {
       type: 'pie',
       data: {
@@ -249,6 +249,11 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 var franchiseStats = {};
 
+USDollar = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+});
+
 // Demonstrate states on the map by their stats. (Total scores and team value)
 fetch("http://127.0.0.1:5000/FranchiseStats")
     .then(response => response.json())
@@ -256,7 +261,7 @@ fetch("http://127.0.0.1:5000/FranchiseStats")
         // Convert data into an object
         data.forEach(item => {
             franchiseStats[item.FRANCHISE] = {
-                TotalSalary: item.TotalSalary,
+                TotalSalary: USDollar.format(item.TotalSalary),
                 AvgPPG: item.AvgPPG
             };
             // marker for each franchise to the map using the provided coordinates
@@ -264,8 +269,8 @@ fetch("http://127.0.0.1:5000/FranchiseStats")
                 const marker = L.marker(item.coordinates).addTo(map);
                 marker.bindPopup(`
                     <strong>${item.FRANCHISE}</strong><br>
-                    Total Salary: ${item.TotalSalary}<br>
-                    Avg PPG: ${item.AvgPPG}
+                    Total Salary: ${USDollar.format(item.TotalSalary)}<br>
+                    Avg PPG: ${item.AvgPPG.toFixed(3)}
                 `);
             }
         });
