@@ -252,6 +252,7 @@ var franchiseStats = {};
 USDollar = new Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'USD',
+  maximumSignificantDigits: 5,
 });
 
 // Demonstrate states on the map by their stats. (Total scores and team value)
@@ -270,7 +271,7 @@ fetch("http://127.0.0.1:5000/FranchiseStats")
                 marker.bindPopup(`
                     <strong>${item.FRANCHISE}</strong><br>
                     Total Salary: ${USDollar.format(item.TotalSalary)}<br>
-                    Avg PPG: ${item.AvgPPG.toFixed(3)}
+                    Average PPG per Player: ${item.AvgPPG.toFixed(3)}
                 `);
             }
         });
