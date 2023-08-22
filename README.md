@@ -26,8 +26,8 @@ NBA, a basketball league of great acclaim and one of the most famous sports leag
 
 # Datasets 
 
-https://www.nbastuffer.com/2022-2023-nba-player-stats/
-https://www.kaggle.com/datasets/omarsobhy14/nba-players-salaries
+- https://www.nbastuffer.com/2022-2023-nba-player-stats/
+- https://www.kaggle.com/datasets/omarsobhy14/nba-players-salaries
 
 ![1](https://github.com/ArminaCA/project3/assets/131399112/627a3781-84ec-4745-92e1-7e25979b39d0)
 
