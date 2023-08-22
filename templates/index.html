@@ -1,31 +1,248 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>NBA Charts</title>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <!-- Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+    />
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-</head>
-<body>
-    <h1>NBA Charts</h1>
-    <div>
-        <h2>Bar Chart</h2>
-        <div id="plot"></div>
+    <style>
+      html {
+        scroll-padding-top: 200px;
+        scroll-behavior: smooth;
+      }
+      body {
+        background-size: cover;
+        font-family: "Arial", sans-serif;
+        background: #5A5A5A;
+      }
+      .description-box {
+        margin-top: 1em;
+        font-size: 1.5em;
+        border: 1px solid #ccc;
+        padding: 20px;
+        background-color: #F0EAD6;
+        border-radius: 10px;
+        box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+      }
+      .navbar {
+        background-color: lightgrey;
+        box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+      }
+      .navbar-light .navbar-nav .nav-link {
+        color: black;
+        transition: color 0.3s ease;
+      }
+      .navbar-light .navbar-nav .nav-link:hover {
+        color: grey;
+      }
+      .content-container {
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+      }
+      h2 {
+        color: #333333;
+        border-bottom: 2px solid #333;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+      }
+      h1 {
+        color: black;
+        margin-bottom: 30px;
+      }
+      .content {
+        position: relative;
+        z-index: 10;
+        margin-top: 120px;
+      }
+      .intro-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+      }
+      .intro-image {
+        max-width: 50%;
+        margin-left: 30px;
+        margin-top: 70px;
+        border-radius: 15px;
+        box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+      }
+      .intro-description {
+        font-size: 2em;
+        flex: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+      <a class="navbar-brand" href="#"
+        ><i class="fas fa-basketball-ball"></i> NBA Charts</a
+      >
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#avgppgperpos">Avergae PPG</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#topfivescores">Highest Scoring Players</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#topfivesalary">Highest Paid Players</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#myPieChart">Distribution of Positions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#map">Map Chart</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- Main Content wrapped with a content class for positioning -->
+    <div class="content container mt-5">
+      <div class="intro-section">
+        <div class="intro-description">
+            <h1 style = "color: white;">Basketball Stars Shining on the States.</h1>
+            <p style = "color: white;">
+              One of the most famous Basketball league NBA, each year generates
+              over $10 billion and the most talented athletes inspire millions of
+              basketball lovers all around the world. With this analysis, we will
+              have an understanding of success and see what makes players valuable
+              and rich athletes.
+            </p>
+          </div>
+          <img
+            src="../static/images/trio.png"
+            alt="NBA Image"
+            class="intro-image"
+          />
+      </div>
+      <div class="content-container mt-4">
+        <h2>Which Positions generate score most</h2>
+        <div class="row">
+          <div class="col-md-8">
+            <div id="avgppgperpos"></div>
+          </div>
+          <div class="col-md-4">
+            <div class="description-box">
+              <p>
+                Through this chart, we will take a broader perspective to
+                identify the positions that contribute the most points to their
+                teams, playing a crucial role in achieving success. While each
+                position has its unique role within the team but who step up to
+                carry the scoring load?
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content-container mt-4">
+        <h2>Top 5 Highest Scoring Players by their Position over Five Years</h2>
+        <div class="row">
+          <div class="col-md-8">
+            <div
+              id="topfivescores"
+              style="width: 100%; height: 600px"
+            ></div>
+          </div>
+          <div class="col-md-4">
+            <div class="description-box">
+              <p>
+                This chart presents the top 5 highest-scoring players
+                categorized by their positions. These athletes, who possess
+                exceptional skills, not only showcase their talent but also
+                leverage their unique abilities to lead their teams to success.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content-container mt-4">
+        <h2>Top 5 Highest Paid Players by their Position</h2>
+        <div class="row">
+          <div class="col-md-8">
+            <div
+              id="topfivesalary"
+              style="width: 100%; height: 600px"
+            ></div>
+          </div>
+          <div class="col-md-4">
+            <div class="description-box">
+              <p>
+                This chart presents the top 5 highest-earning players
+                categorized by their positions. These athletes
+                are compensated in the millions, even tens of millions of dollars 
+                for their incredible talent and prowess at the sport.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content-container mt-4">
+        <h2>About the NBA Positions</h2>
+        <div class="row">
+          <div class="col-md-8">
+            <canvas id="myPieChart" style="width: 100%; height: 600px"></canvas>
+          </div>
+          <div class="col-md-4">
+            <div class="description-box">
+              <p>
+                Guard (G) <br>  
+                Forward (F) <br>
+                Forward-Center (F-C) <br>
+                Guard-Center (G-C) <br>
+                Center (C) <br>
+                Center-Forward (C-F) <br>
+                Forward-Guard (F-G)
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content-container mt-4">
+        <h2>
+          Visualize States on the Map Based on Their Statistics (Total Scores
+          and Team Value)
+        </h2>
+        <div class="row">
+          <div class="col-md-8">
+            <div id="map" style="width: 100%; height: 600px"></div>
+          </div>
+          <div class="col-md-4">
+            <div class="description-box">
+              <p>
+                Concluding this, we can take a panoramic view across the states,
+                observing team statistics like total scores over the year and
+                the financial investment they make in player salaries
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div>
-        <h2>Line Chart</h2>
-        <canvas id="top10SalaryChart"></canvas>
-    </div>
-    <div>
-        <h2>Radial Chart</h2>
-        <canvas id="myPieChart"></canvas>
-    </div>
-    <div>
-        <h2>Map Chart</h2>
-        <div id="map" style="width: 100%; height: 600px;"></div>
-    </div>
-</body>
-<script src="{{ url_for('static', filename='../static/js/plots.js') }}"></script>
+    <script src="{{ url_for('static', filename='../static/js/plots.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
 </html>

@@ -12,6 +12,10 @@ from sqlalchemy import func, and_
 from sqlalchemy import desc
 import requests
 
+import helper
+
+
+
 # Database Setup
 engine = create_engine("sqlite:///./Resources/NBAStats.sqlite")
 
@@ -43,19 +47,25 @@ def table1():
 @app.route("/Stats")
 def table2():
     session = Session(engine)
-    result = session.query(Stats.RANK, Stats.NAME, Stats.POSITION, Stats.AGE, Stats.PPG, Stats.GP).all()
+    result = session.query(Stats.RANK, Stats.NAME, Stats.POSITION, Stats.AGE, Stats.PPG, Stats.GP, Stats.YEAR).all()
     session.close()
     return jsonify([row._asdict() for row in result])
+
+@app.route("/avgppg")
+def table3():
+    session = Session(engine)
+    result = session.query(Stats.RANK, Stats.NAME, Stats.POSITION, Stats.AGE, Stats.PPG, Stats.GP, Stats.YEAR).all()
+    session.close()
+    transformed_result = helper.transform_stats_avgppg(result)
+    return jsonify(transformed_result)
 
 @app.route("/TopSalary")
 def top_salary():
     session = Session(engine)
-    result = session.query(Salary.RANK, Salary.NAME, Salary.POSITION, Salary.AGE, Salary.PPG, Salary.GP, Salary.SALARY)\
-                    .order_by(desc(Salary.SALARY))\
-                    .limit(10)\
-                    .all()
+    result = session.query(Salary.RANK, Salary.NAME, Salary.POSITION, Salary.AGE, Salary.PPG, Salary.GP, Salary.SALARY)
     session.close()
-    return jsonify([row._asdict() for row in result])
+    transformed_result = helper.transform_stats_salary(result)
+    return jsonify(transformed_result)
 
 @app.route("/FranchiseStats")
 def franchise_stats():
@@ -102,6 +112,14 @@ def team_position_salary():
     session.close()
     return jsonify([row._asdict() for row in result])
 
+@app.route("/TopScorebyPosition")
+def topscorebyposition():
+    session = Session(engine)
+    result = session.query(Stats.RANK, Stats.NAME, Stats.POSITION, Stats.AGE, Stats.PPG, Stats.GP, Stats.YEAR).all()
+    session.close()
+    transformed_result = helper.transform_stats_ppg(result)
+    return jsonify(transformed_result)
+    
 @app.route("/TopScorers")
 def top_scorers():
     session = Session(engine)

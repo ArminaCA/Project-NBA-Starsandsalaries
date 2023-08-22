@@ -1,52 +1,3 @@
-// Stacked Radial Bar Chart
-d3.json("http://127.0.0.1:5000/TeamPositionSalary").then((data) => {
-  formatted_response = {};
-  franchises = [];
-
-  for (let i = 0; i < data.length; i++) {
-    if (data[i].SALARY != null) {
-      if (formatted_response.hasOwnProperty(data[i].FRANCHISE)) {
-        formatted_response[data[i].FRANCHISE][data[i].POSITION] = [data[i].SALARY]
-      } else {
-        franchises.push(data[i].FRANCHISE)
-        formatted_response[data[i].FRANCHISE] = ["G", "F", "F-C", "G-F", "C", "C-F", "F-G"];
-        formatted_response[data[i].FRANCHISE][data[i].POSITION] = [data[i].SALARY];
-      }
-    }
-  } 
-  //alert(formatted_response["Sacramento Kings"]["G"]);
-  // Get the canvas context
-  var ctx = document.getElementById('test').getContext('2d');
-
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: franchises,
-      datasets: [{
-        label: 'Salary',
-        data: formatted_response,
-        backgroundColor: backgroundColors,
-        borderColor: 'rgba(75, 192, 192, 1)', 
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        x: {
-          beginAtZero: true
-        }
-      },
-      plugins: {
-        legend: {
-          display: true,
-          position: 'top',
-        }
-      }
-    }
-  });
-  alert("PASS2");
-});
-
 // Which positions are most scorer in NBA
 d3.json("http://127.0.0.1:5000/Stats").then((data) => {
   formatted_response = {};
@@ -71,22 +22,146 @@ d3.json("http://127.0.0.1:5000/Stats").then((data) => {
   });
 
   let trace1 = {
-    x: Object.keys(formatted_response),
+    x: ["Center", "Guard-Forward", "Forward-Center", "Forward", "Guard", "Forward-Guard", "Center-Forward"],
     y: avg_ppg,
+    name: "positions",
     type: "bar",
   };
 
   let data_trace = [trace1];
 
   let layout = {
-    title: "Score by Position",
+    title: "Average Score by Position",
   };
 
-  Plotly.newPlot("plot", data_trace, layout);
+  Plotly.newPlot("avgppgperpos", data_trace, layout);
 });
 
+// Top Ten Scorers by Position
+d3.json("http://127.0.0.1:5000/TopScorebyPosition").then((data) => {
+  let trace1 = {
+    x: data["C"].NAME,
+    y: data["C"].PPG,
+    name: "Center",
+    type: "bar"
+  };
 
-// Top scorers by positions and ages between 2018-2023
+  let trace2 = {
+    x: data["C-F"].NAME,
+    y: data["C-F"].PPG,
+    name: "Center-Foward",
+    type: "bar"
+  };
+
+  let trace3 = {
+    x: data["F"].NAME,
+    y: data["F"].PPG,
+    name: "Foward",
+    type: "bar",
+  };
+
+  let trace4 = {
+    x: data["F-C"].NAME,
+    y: data["F-C"].PPG,
+    name: "Foward-Center",
+    type: "bar",
+  };
+  
+  let trace5 = {
+    x: data["F-G"].NAME,
+    y: data["F-G"].PPG,
+    name: "Foward-Guard",
+    type: "bar",
+  };
+
+  
+  let trace6 = {
+    x: data["G"].NAME,
+    y: data["G"].PPG,
+    name: "Guard",
+    type: "bar",
+  };
+
+  let trace7 = {
+    x: data["G-F"].NAME,
+    y: data["G-F"].PPG,
+    name: "Guard-Foward",
+    type: "bar",
+  };
+
+  let data_trace = [trace1, trace2, trace3, trace4, trace5, trace6, trace7];
+
+  let layout = {
+    title: "Top Five Points Per Game by Position",
+    barmode: "stack"
+  };
+
+  Plotly.newPlot("topfivescores", data_trace, layout);
+});
+
+// Top Ten Scorers by Position
+d3.json("http://127.0.0.1:5000/TopSalary").then((data) => {
+  let trace1 = {
+    x: data["C"].NAME,
+    y: data["C"].SALARY,
+    name: "Center",
+    type: "bar"
+  };
+
+  let trace2 = {
+    x: data["C-F"].NAME,
+    y: data["C-F"].SALARY,
+    name: "Center-Foward",
+    type: "bar"
+  };
+
+  let trace3 = {
+    x: data["F"].NAME,
+    y: data["F"].SALARY,
+    name: "Foward",
+    type: "bar",
+  };
+
+  let trace4 = {
+    x: data["F-C"].NAME,
+    y: data["F-C"].SALARY,
+    name: "Foward-Center",
+    type: "bar",
+  };
+  
+  let trace5 = {
+    x: data["F-G"].NAME,
+    y: data["F-G"].SALARY,
+    name: "Foward-Guard",
+    type: "bar",
+  };
+
+  
+  let trace6 = {
+    x: data["G"].NAME,
+    y: data["G"].SALARY,
+    name: "Guard",
+    type: "bar",
+  };
+
+  let trace7 = {
+    x: data["G-F"].NAME,
+    y: data["G-F"].SALARY,
+    name: "Guard-Foward",
+    type: "bar",
+  };
+
+  let data_trace = [trace1, trace2, trace3, trace4, trace5, trace6, trace7];
+
+  let layout = {
+    title: "Top Five Salaries by Position",
+    barmode: "stack"
+  };
+
+  Plotly.newPlot("topfivesalary", data_trace, layout);
+});
+
+// Distribution of positions in the NBA
 fetch("http://127.0.0.1:5000/PositionCounts")
   .then(response => response.json())
   .then(data => {
@@ -118,9 +193,9 @@ fetch("http://127.0.0.1:5000/PositionCounts")
         }
       }
     });
-  alert("HEYOO")
   });
 
+  /*
   // Top10 highest paid players by their position
   fetch("http://127.0.0.1:5000/TopSalary")
   .then(response => response.json())
@@ -163,6 +238,7 @@ fetch("http://127.0.0.1:5000/PositionCounts")
       }
     });
   });
+*/
 
 var map = L.map('map').setView([37.8, -96], 4);
 
@@ -194,41 +270,3 @@ fetch("http://127.0.0.1:5000/FranchiseStats")
             }
         });
     });
-
-d3.json("http://127.0.0.1:5000/Stats").then((data) => {
-formatted_response = {};
-avg_ppg = [];
-
-  for (let i = 0; i < data.length; i++) {
-    if (data[i].PPG != null) {
-      if (formatted_response.hasOwnProperty(data[i].POSITION)) {
-        formatted_response[data[i].POSITION].push(data[i].PPG);
-      } else {
-        formatted_response[data[i].POSITION] = [data[i].PPG];
-      }
-    }
-  }
-
-  Object.keys(formatted_response).forEach(function (key) {
-    let sum = 0;
-    for (let i = 0; i < formatted_response[key].length; i++) {
-      sum += formatted_response[key][i];
-    }
-    avg_ppg.push(sum / formatted_response[key].length);
-  });
-
-  let trace1 = {
-    x: Object.keys(formatted_response),
-    y: avg_ppg,
-    type: "bar",
-  };
-
-  let data_trace = [trace1];
-
-  let layout = {
-    title: "Score by Position",
-  };
-
-  Plotly.newPlot("plot", data_trace, layout);
-});
-
